@@ -1,5 +1,15 @@
 import fetch from 'node-fetch';
 import cron from 'node-cron';
+import express from 'express';
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.send('Server is awake!');
+});
 
 const wakeUp = () => {
     fetch('https://pairme.onrender.com')
@@ -28,3 +38,7 @@ cron.schedule('*/30 * * * * *', () => {
 });
 
 console.log('Server script running...');
+
+app.listen(3000, () => {
+    console.log('Server is running...');
+});
